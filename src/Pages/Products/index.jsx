@@ -48,6 +48,7 @@ export default function Products() {
                 body: JSON.stringify(values),
                 headers: {
                   "Content-Type": "application/json",
+                  // authoriation: 'TOKEN'
                 },
               })
                 .then((response) => {

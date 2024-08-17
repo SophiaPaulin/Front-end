@@ -15,7 +15,7 @@ export default function Login() {
     const password = passwordRef.current.value;
 
     if (email.length > 0 && password.length > 0) {
-      fetch("http://localhost:3003/api/auth/admin/signin", {
+      fetch("http://localhost:5000/api/auth/signin", {
         method: "POST",
         body: JSON.stringify({
           email,
@@ -30,13 +30,14 @@ export default function Login() {
           return response.json();
         })
         .then((result) => {
-          if (result.success && result.token) {
-            sessionStorage.setItem("_tk", result.token);
-            setIsLoggedIn(true);
+          // if (result.success && result.token) {
+          //   sessionStorage.setItem("_tk", result.token);
+          //   setIsLoggedIn(true);
             navigator("/dashboard");
-          } else {
-            showToast(result.message, "error");
-          }
+          // } else {
+          //   showToast(result.message, "error");
+          // }
+          console.log(result);
         })
         .catch((error) => {
           showToast(error, "error");
@@ -69,9 +70,9 @@ export default function Login() {
             className="col-6"
             style={{
               backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
+              backgroundPosition:"center",
               backgroundImage:
-                'url("https://img.freepik.com/free-photo/black-friday-elements-assortment_23-2149074076.jpg?size=626&ext=jpg")',
+                'url("https://png.pngtree.com/png-clipart/20210307/ourmid/pngtree-car-repair-service-vignette-png-image_3014260.jpg")',
             }}
           ></div>
           <div className="col-6 d-flex align-items-center justify-content-center">
@@ -115,5 +116,4 @@ export default function Login() {
         </div>
       </div>
     </div>
-  );
-}
+  )}
