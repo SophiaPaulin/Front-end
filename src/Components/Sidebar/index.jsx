@@ -28,10 +28,10 @@ const OFFER_ROUTES = [
   //   id: "manageOffers",
   // },
 ];
-const FOOD_ROUTES = [{
+const BRAND_ROUTES = [{
     label: "Create Brand",
     to: "/dashboard/brand/create",
-    id: "createFood",
+    id: "createBrand",
   },
   {
     label: "Manage Brands",
