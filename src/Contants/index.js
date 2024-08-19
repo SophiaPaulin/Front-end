@@ -21,3 +21,8 @@ export const DiscountUnits = [
   { label: "Percentage", id: "%" },
   { label: "Indian Rupee", id: "inr" },
 ];
+
+export const paymentModes = [
+  { label: "Cash On Delivery", id: "Cash On Delivery" },
+  { label: "Online Payment", id: "Online Payment" },
+];

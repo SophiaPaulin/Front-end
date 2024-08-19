@@ -4,6 +4,7 @@ import "./App.css";
 import Landing from "./Pages/Landing";
 import {Routes, Route} from "react-router-dom";
 import Login from "./Pages/Login";
+import SignUp from "./Pages/Login/Signup";
 import Settings from "./Pages/Settings";
 import Products from "./Pages/Products";
 import Insights from "./Pages/Insights";
@@ -12,9 +13,10 @@ import ManageProducts from "./Pages/Products/ManageProducts";
 import ManageDiscounts from "./Pages/Discounts/ManageDiscounts";
 import {useAuthContext} from "./Context/AuthContext";
 import NotFound from "./Pages/NotFound";
-import CreateFood from "./Pages/Food";
-import ManageFoods from "./Pages/Food/ManageFoods";
+import CreateBrand from "./Pages/Brands";
+import ManageBrands from "./Pages/Brands/ManageBrands";
 import ManageOrders from "./Pages/Orders/manageOrders";
+import OrdersCreate from "./Pages/Orders";
 
 function App() {
     const {isLoggedIn} = useAuthContext();
@@ -22,7 +24,8 @@ function App() {
         <div>
             <ToastContainer/>
             <Routes>
-                {!isLoggedIn && <Route Component={Login} path="/"/>}
+                {!isLoggedIn && <Route Component={Login} exact path="/"/>}
+                <Route Component={SignUp} path="/signup"/>
                 {isLoggedIn && (
                     <Route Component={Landing} path="/dashboard">
                         <Route Component={Insights} index/>
@@ -31,9 +34,10 @@ function App() {
                         <Route Component={Discounts} path="/dashboard/offers/create"/>
                         <Route Component={ManageDiscounts} path="/dashboard/offers/"/>
                         <Route Component={Settings} path="/dashboard/settings"/>
-                        <Route Component={CreateFood} path="/dashboard/food/create"/>
-                        <Route Component={ManageFoods} path="/dashboard/food/manage"/>
+                        <Route Component={CreateBrand} path="/dashboard/brand/create"/>
+                        <Route Component={ManageBrands} path="/dashboard/brand/manage"/>
                         <Route Component={ManageOrders} path="/dashboard/orders/manage"/>
+                        <Route Component={OrdersCreate} path="/dashboard/orders/create"/>
                     </Route>
                 )}
                 <Route Component={NotFound} path="*"/>

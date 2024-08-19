@@ -1,47 +1,37 @@
 import { ErrorMessage, Field, FieldArray, Formik } from "formik";
-import { Categories, SubCategories } from "../../Contants";
+import { paymentModes } from "../../Contants";
 import Select from "../../Elements/Select";
 import TextInput from "../../Elements/TextInput";
 import useOffers from "../../Hooks/useOffersApi/useOffersApi";
 import { useNavigate } from "react-router-dom";
 
-
 const initialState = {
-  name: "",
-  description: "",
-  normalPrice: "",
-  actualPrice: "",
-  images: [""],
-  offerId: null,
-  isActive: false,
-  availableQuantity: 0,
+  products: [""],
+  orderValue: 0,
+  isPaid: false,
+  paymentMode: 'Cash On Delivery',
+  orderStatus: 'Placed',
+  duration: null
 };
 
-export default function Products() {
+export default function OrdersCreate() {
   const [offers, error] = useOffers();
-  const navigation = useNavigate();
+  const navigation = useNavigate()
   return (
     <div className="container">
       <div className="container-fluid">
         <Formik
           initialValues={initialState}
-          validate={(values) => {
-            const errors = {};
-            if (!values.name) {
-              errors.name = "Required";
-            } else if (!values.normalPrice) {
-              errors.normalCost = "Required";
-            } else if (!values.actualPrice) {
-              errors.actualCost = "Required";
-            }
-            return errors;
-          }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            console.log({ values })
+            console.log({values})
+            const payload = {
+              ...values,
+              userId: sessionStorage.getItem('userId')
+            }
             if (values) {
-              fetch("http://localhost:9000/api/products/create", {
+              fetch("http://localhost:9000/api/orders/create", {
                 method: "POST",
-                body: JSON.stringify(values),
+                body: JSON.stringify(payload),
                 headers: {
                   "Content-Type": "application/json",
                   authorization: sessionStorage.getItem('token')
@@ -53,9 +43,9 @@ export default function Products() {
                   return response.json();
                 })
                 .then((result) => {
-                  console.log('products-response', { result })
+                  console.log('order-', result);
                   if (result.status) {
-                    navigation('/dashboard/products')
+                    navigation('/dashboard/orders')
                   }
                 })
                 .catch((error) => console.log(error));
@@ -65,37 +55,37 @@ export default function Products() {
           {({
             values = {},
             errors = {},
-            handleChange = () => { },
-            handleBlur = () => { },
+            handleChange = () => {},
+            handleBlur = () => {},
             touched = {},
-            handleSubmit = () => { },
-            resetForm = () => { },
+            handleSubmit = () => {},
+            resetForm = () => {},
           }) => (
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-6">
                   <div className="mb-3">
-                    <FieldArray name="images">
+                    <FieldArray name="products">
                       {({ remove, push }) => (
                         <div>
-                          {values.images.length > 0 &&
-                            values.images.map((image, index) => (
+                          {values.products.length > 0 &&
+                            values.products.map((product, index) => (
                               <div
                                 className="row mb-2 d-flex align-items-center"
                                 key={index}
                               >
                                 <div className="col">
-                                  <label htmlFor={`images.${index}`}>
-                                    Image {index + 1}
+                                  <label htmlFor={`products.${index}`}>
+                                  Product {index + 1}
                                   </label>
                                   <Field
-                                    name={`images.${index}`}
-                                    placeholder="Enter Image Url"
+                                    name={`products.${index}`}
+                                    placeholder="Enter Product Name"
                                     type="text"
                                     className="form-control"
                                   />
                                   <ErrorMessage
-                                    name={`images.${index}`}
+                                    name={`products.${index}`}
                                     component="div"
                                     className="field-error"
                                   />
@@ -116,19 +106,19 @@ export default function Products() {
                             className="btn btn-sm btn-primary"
                             onClick={() => push("")}
                           >
-                            + Add Image
+                            + Add Products
                           </button>
                         </div>
                       )}
                     </FieldArray>
                   </div>
                   <TextInput
-                    label="Product Name"
-                    id="name"
-                    name="name"
+                    label="Order Value"
+                    id="orderValue"
+                    name="orderValue"
                     type="text"
-                    value={values["name"]}
-                    placeholder="Enter Product name"
+                    value={values["orderValue"]}
+                    placeholder="Enter Order Value"
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
@@ -142,42 +132,26 @@ export default function Products() {
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
-                  <div className="row">
-                    <div className="col-6">
-                      <TextInput
-                        label="Product Normal Price"
-                        id="normalPrice"
-                        name="normalPrice"
-                        type="number"
-                        value={values["normalPrice"]}
-                        placeholder="Enter Normal Price"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="col-6">
-                      <TextInput
-                        label="Product Actual Price"
-                        id="actualPrice"
-                        name="actualPrice"
-                        type="number"
-                        value={values["actualPrice"]}
-                        placeholder="Enter Actual Price"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
+                  <TextInput
+                    label="Duration"
+                    id="duration"
+                    name="duration"
+                    type="text"
+                    value={values["duration"]}
+                    placeholder="Enter Duration"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
                   <div className="row">
                     <Select
-                      label="Select Offer"
-                      id="offerId"
-                      name="offerId"
-                      value={values["offerId"]}
+                      label="Payment Mode"
+                      id="paymentMode"
+                      name="paymentMode"
+                      value={values["paymentMode"]}
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      options={offers?.map((d) => {
-                        return { id: d._id, label: d.name };
+                      options={paymentModes?.map((d) => {
+                        return { id: d.id, label: d.label };
                       })}
                     />
                   </div>
@@ -185,27 +159,17 @@ export default function Products() {
                     <input
                       className="form-check-input"
                       type="checkbox"
-                      checked={values["isActive"]}
-                      id="isActive"
+                      checked={values["isPaid"]}
+                      id="isPaid"
                       onBlur={handleBlur}
                       onChange={handleChange}
                     />
-                    <label className="form-check-label" htmlFor="isActive">
-                      Product Active
+                    <label className="form-check-label" htmlFor="isPaid">
+                      Product Paid
                     </label>
                   </div>
-                  <TextInput
-                    label="Available Quantity"
-                    id="availableQuantity"
-                    name="availableQuantity"
-                    type="number"
-                    value={values["availableQuantity"]}
-                    placeholder="Enter Available Quantity"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                  />
                   <button type="submit" className="btn btn-sm btn-primary mr-2">
-                    Create Product
+                    Create Order
                   </button>
                   <button
                     onClick={resetForm}

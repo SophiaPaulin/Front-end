@@ -4,13 +4,21 @@ import { showToast } from "../../Assets/toasts";
 import { useAuthContext } from "../../Context/AuthContext";
 
 const initialState = {
-  name: "",
-  description: "",
-  price: 0,
+  brandName: "",
+  email: "",
+  phoneNumber: 0,
+  branch:"",
+  address:{
+    addressLine1:"",
+    addressLine2:false,
+    city:"",
+    state:"",
+    areaCode:""
+  },
   isAvailable: false,
 };
 
-export default function CreateFood() {
+export default function CreateBrand() {
   const { currentUser = {}  } = useAuthContext();
   return (
     <div className="container">
@@ -30,12 +38,12 @@ export default function CreateFood() {
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             if (values) {
-              fetch("http://localhost:3003/products/create/", {
+              fetch("http://localhost:9000/api/brands/create/", {
                 method: "POST",
                 body: JSON.stringify({...values, brand: currentUser.brand}),
                 headers: {
                   "Content-Type": "application/json",
-                  token: sessionStorage.getItem("_tk"),
+                  token: sessionStorage.getItem("token"),
                 },
               })
                 .then((response) => {
@@ -65,32 +73,82 @@ export default function CreateFood() {
               <div className="row">
                 <div className="col-6">
                   <TextInput
-                    label="Food Name"
+                    label="Brand Name"
                     id="name"
-                    name="name"
+                    name="brandName"
                     type="text"
-                    value={values["name"]}
-                    placeholder="Enter Food name"
+                    value={values["brandName"]}
+                    placeholder="Enter Brand name"
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
                   <TextInput
-                    label="Food Description"
-                    id="description"
-                    name="description"
-                    type="text"
-                    value={values["description"]}
-                    placeholder="Enter Food Description"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                  />
-                  <TextInput
-                    label="Food Price"
-                    id="price"
-                    name="price"
+                    label="Mail Id"
+                    id="mailId"
+                    name="Mail Id"
                     type="number"
-                    value={values["price"]}
-                    placeholder="Enter Food Price"
+                    value={values["Mail Id"]}
+                    placeholder="Enter Mail Id"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <TextInput
+                    label="Branch"
+                    id="branch"
+                    name="branch"
+                    type="text"
+                    value={values["Branchr"]}
+                    placeholder="Enter Branch"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <TextInput
+                    label="Address"
+                    id="address"
+                    name="address"
+                    type="text"
+                    value={values["Address"]}
+                    placeholder="Enter Address"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <TextInput
+                    label="City"
+                    id="city"
+                    name="city"
+                    type="text"
+                    value={values["City"]}
+                    placeholder="Enter City"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <TextInput
+                    label="State"
+                    id="state"
+                    name="state"
+                    type="text"
+                    value={values["State"]}
+                    placeholder="Enter State"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <TextInput
+                    label="Area Code"
+                    id="areaCode"
+                    name="areaCode"
+                    type="text"
+                    value={values["Area Code"]}
+                    placeholder="Enter Area Code"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                   <TextInput
+                    label="Phone Number"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    type="text"
+                    value={values["Phone Number"]}
+                    placeholder="Enter Phone Number"
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
@@ -104,11 +162,11 @@ export default function CreateFood() {
                       onChange={handleChange}
                     />
                     <label className="form-check-label" htmlFor="isAvailable">
-                      Food Available
+                      Brand Available
                     </label>
                   </div>
                   <button type="submit" className="btn btn-sm btn-primary mr-2">
-                    Create Food
+                    Create Brand
                   </button>
                   <button
                     onClick={resetForm}

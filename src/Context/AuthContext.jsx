@@ -14,7 +14,7 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }) {
   const { decodedToken, isExpired } = useJwt(
-    sessionStorage.getItem("_tk") || ""
+    sessionStorage.getItem("token") || ""
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -25,19 +25,19 @@ export default function AuthContextProvider({ children }) {
     }
   }, [decodedToken, isExpired]);
 
-  useEffect(() => {
-    if (decodedToken && !isExpired) {
-      fetch(`http://localhost:3003/api/users/user/${decodedToken._id}`, {
-        method: "GET"
-      }).then((response) => response.json())
-      .then((result) => {
-        showToast(result.message)
-        setCurrentUser(result.data)
-      }).catch((error) => {
-        showToast(error.message, "error")
-      })
-    }
-  }, [decodedToken, isExpired]);
+  // useEffect(() => {
+  //   if (decodedToken && !isExpired) {
+  //     fetch(`http://localhost:3003/api/users/user/${decodedToken._id}`, {
+  //       method: "GET"
+  //     }).then((response) => response.json())
+  //     .then((result) => {
+  //       showToast(result.message)
+  //       setCurrentUser(result.data)
+  //     }).catch((error) => {
+  //       showToast(error.message, "error")
+  //     })
+  //   }
+  // }, [decodedToken, isExpired]);
 
   const values = {
     isLoggedIn,

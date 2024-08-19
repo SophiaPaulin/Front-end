@@ -17,29 +17,34 @@ const PRODUCT_ROUTES = [
   },
 ];
 const OFFER_ROUTES = [
-  {
-    label: "Create Offer",
-    to: "/dashboard/offers/create",
-    id: "createProduct",
-  },
-  {
-    label: "Manage Offers",
-    to: "/dashboard/offers",
-    id: "manageOffers",
-  },
+  // {
+  //   label: "Create Offer",
+  //   to: "/dashboard/offers/create",
+  //   id: "createProduct",
+  // },
+  // {
+  //   label: "Manage Offers",
+  //   to: "/dashboard/offers",
+  //   id: "manageOffers",
+  // },
 ];
 const FOOD_ROUTES = [{
-    label: "Create Food",
-    to: "/dashboard/food/create",
+    label: "Create Brand",
+    to: "/dashboard/brand/create",
     id: "createFood",
   },
   {
-    label: "Manage Foods",
-    to: "/dashboard/food/manage",
-    id: "manageFoods",
+    label: "Manage Brands",
+    to: "/dashboard/brand/manage",
+    id: "manageBrands",
   },
 ];
 const ORDER_ROUTES = [
+  {
+    label: "Create Orders",
+    to: "/dashboard/orders/create",
+    id: "createOrders",
+  },
   {
     label: "Manage Orders",
     to: "/dashboard/orders/manage",
@@ -90,11 +95,11 @@ export default function Sidebar() {
         label="Products"
         routes={PRODUCT_ROUTES}
       />
-      <NavItemExpandable id="offer" label="Offers" routes={OFFER_ROUTES} />
-      <NavItemExpandable id = "offer"
-      label = "Foods"
+      {/* <NavItemExpandable id="offer" label="Offers" routes={OFFER_ROUTES} /> */}
+      <NavItemExpandable id = "brands"
+      label = "Brands"
       routes = {
-        FOOD_ROUTES
+        BRAND_ROUTES
       }
       />
       <NavItemExpandable 
