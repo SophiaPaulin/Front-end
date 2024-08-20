@@ -29,15 +29,15 @@ const OFFER_ROUTES = [
   // },
 ];
 const BRAND_ROUTES = [{
-    label: "Create Brand",
-    to: "/dashboard/brand/create",
-    id: "createBrand",
-  },
-  {
-    label: "Manage Brands",
-    to: "/dashboard/brand/manage",
-    id: "manageBrands",
-  },
+  label: "Create Brand",
+  to: "/dashboard/brand/create",
+  id: "createBrand",
+},
+{
+  label: "Manage Brands",
+  to: "/dashboard/brand/manage",
+  id: "manageBrands",
+},
 ];
 const ORDER_ROUTES = [
   {
@@ -52,20 +52,20 @@ const ORDER_ROUTES = [
   },
 ];
 const USER_ROUTES = [{
-    label: "Create User",
-    to: "/dashboard/user/create",
-    id: "createUser",
-  },
-  {
-    label: "Manage Users",
-    to: "/dashboard/user/manage",
-    id: "manageUser",
-  },
+  label: "Create User",
+  to: "/dashboard/user/create",
+  id: "createUser",
+},
+{
+  label: "Manage Users",
+  to: "/dashboard/user/manage",
+  id: "manageUser",
+},
 ];
 
 export default function Sidebar() {
   const sidebarRef = useRef(null);
-  const {currentUser = {}} = useAuthContext();
+  const { currentUser = {} } = useAuthContext();
   const { brand = {} } = useBrandContext();
   function handleSidebarToggle() {
     if (sidebarRef.current.classList.contains("toggled")) {
@@ -96,25 +96,22 @@ export default function Sidebar() {
         routes={PRODUCT_ROUTES}
       />
       {/* <NavItemExpandable id="offer" label="Offers" routes={OFFER_ROUTES} /> */}
-      <NavItemExpandable id = "brands"
-      label = "Brands"
-      routes = {
-        BRAND_ROUTES
-      }
+      <NavItemExpandable
+        id="brands"
+        label="Brands"
+        routes={BRAND_ROUTES}
       />
-      <NavItemExpandable 
+      <NavItemExpandable
         id="orders"
         label="Orders"
         routes={ORDER_ROUTES}
       />
-      {currentUser && currentUser.isSuperAdmin 
-        ? <NavItemExpandable 
-        id="users"
-        label = "Users"
-        routes = {
-          USER_ROUTES
-        }
-      />: null}
+      {currentUser && currentUser.isSuperAdmin
+        ? <NavItemExpandable
+          id="users"
+          label="Users"
+          routes={USER_ROUTES}
+        /> : null}
 
       <hr className="sidebar-divider d-none d-md-block" />
 

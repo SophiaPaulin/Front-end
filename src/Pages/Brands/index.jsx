@@ -6,11 +6,11 @@ import { useAuthContext } from "../../Context/AuthContext";
 const initialState = {
   brandName: "",
   email: "",
-  phoneNumber: 0,
+  phoneNumber: "",
   branch:"",
   address:{
     addressLine1:"",
-    addressLine2:false,
+    addressLine2:"",
     city:"",
     state:"",
     areaCode:""
@@ -38,6 +38,7 @@ export default function CreateBrand() {
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             if (values) {
+              // console.log({values})
               fetch("http://localhost:9000/api/brands/create/", {
                 method: "POST",
                 body: JSON.stringify({...values, brand: currentUser.brand}),
@@ -70,6 +71,7 @@ export default function CreateBrand() {
             resetForm = () => {},
           }) => (
             <form onSubmit={handleSubmit}>
+              {/* {JSON.stringify(values, null, 2)} */}
               <div className="row">
                 <div className="col-6">
                   <TextInput
@@ -85,10 +87,10 @@ export default function CreateBrand() {
                   <TextInput
                     label="Mail Id"
                     id="mailId"
-                    name="Mail Id"
-                    type="number"
-                    value={values["Mail Id"]}
-                    placeholder="Enter Mail Id"
+                    name="email"
+                    type="text"
+                    value={values["email"]}
+                    placeholder="Enter Email"
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
@@ -97,27 +99,37 @@ export default function CreateBrand() {
                     id="branch"
                     name="branch"
                     type="text"
-                    value={values["Branchr"]}
+                    value={values["branch"]}
                     placeholder="Enter Branch"
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
                   <TextInput
-                    label="Address"
-                    id="address"
-                    name="address"
+                    label="Address Line 1"
+                    id="addressLine1"
+                    name="address.addressLine1"
                     type="text"
-                    value={values["Address"]}
-                    placeholder="Enter Address"
+                    value={values.address.addressLine1}
+                    placeholder="Enter Address 1"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <TextInput
+                    label="Address Line 2"
+                    id="addressLine2"
+                    name="address.addressLine2"
+                    type="text"
+                    value={values.address["addressLine2"]}
+                    placeholder="Enter Address 1"
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
                   <TextInput
                     label="City"
                     id="city"
-                    name="city"
+                    name="address.city"
                     type="text"
-                    value={values["City"]}
+                    value={values.address["city"]}
                     placeholder="Enter City"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -125,9 +137,9 @@ export default function CreateBrand() {
                   <TextInput
                     label="State"
                     id="state"
-                    name="state"
+                    name="address.state"
                     type="text"
-                    value={values["State"]}
+                    value={values.address["state"]}
                     placeholder="Enter State"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -135,9 +147,9 @@ export default function CreateBrand() {
                   <TextInput
                     label="Area Code"
                     id="areaCode"
-                    name="areaCode"
+                    name="address.areaCode"
                     type="text"
-                    value={values["Area Code"]}
+                    value={values.address["areaCode"]}
                     placeholder="Enter Area Code"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -147,7 +159,7 @@ export default function CreateBrand() {
                     id="phoneNumber"
                     name="phoneNumber"
                     type="text"
-                    value={values["Phone Number"]}
+                    value={values["phoneNumber"]}
                     placeholder="Enter Phone Number"
                     onBlur={handleBlur}
                     onChange={handleChange}

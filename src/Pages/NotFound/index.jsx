@@ -11,7 +11,7 @@ export default function NotFound() {
         <p>
           Go back to login page{" "}
           {isLoggedIn ? (
-            <Link to="/dashboard">Go To Dashboard</Link>
+            <Link to="/login">Go To Login</Link>
           ) : (
             <Link to="/">Login</Link>
           )}

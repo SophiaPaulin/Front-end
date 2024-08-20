@@ -9,7 +9,7 @@ export default function Navbar() {
     if (token) {
       sessionStorage.removeItem(token);
       sessionStorage.clear()
-      navigation('/')
+      navigation('/login')
     }
   }
 

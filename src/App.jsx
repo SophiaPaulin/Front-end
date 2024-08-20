@@ -25,6 +25,7 @@ function App() {
             <ToastContainer/>
             <Routes>
                 {!isLoggedIn && <Route Component={Login} exact path="/"/>}
+                <Route Component={Login} path="/login"/>
                 <Route Component={SignUp} path="/signup"/>
                 {isLoggedIn && (
                     <Route Component={Landing} path="/dashboard">
