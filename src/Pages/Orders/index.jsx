@@ -4,6 +4,8 @@ import Select from "../../Elements/Select";
 import TextInput from "../../Elements/TextInput";
 import useOffers from "../../Hooks/useOffersApi/useOffersApi";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { mycontext } from "../../App";
 
 const initialState = {
   products: [""],
@@ -15,6 +17,7 @@ const initialState = {
 };
 
 export default function OrdersCreate() {
+  const {baseURL}= useContext(mycontext)
   const [offers, error] = useOffers();
   const navigation = useNavigate()
   return (
@@ -29,7 +32,7 @@ export default function OrdersCreate() {
               userId: sessionStorage.getItem('userId')
             }
             if (values) {
-              fetch("http://localhost:9000/api/orders/create", {
+              fetch(`${baseURL}/api/orders/create`, {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {

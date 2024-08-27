@@ -1,9 +1,11 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../Context/AuthContext";
 import { showToast } from "../../Assets/toasts";
+import { mycontext } from "../../App";
 
 export default function SignUp() {
+  const {baseURL}=useContext(mycontext)
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const navigator = useNavigate();
@@ -19,7 +21,7 @@ export default function SignUp() {
     const password = passwordRef.current.value;
 
     if (email.length > 0 && password.length > 0) {
-      fetch("http://localhost:9000/api/auth/signin", {
+      fetch(`${baseURL}/api/auth/create`, {
         method: "POST",
         body: JSON.stringify({
           email,

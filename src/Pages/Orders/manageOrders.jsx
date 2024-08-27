@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { mycontext } from "../../App";
 
 export default function ManageOrders() {
+  const {baseURL}= useContext(mycontext)
  const [orders, setOrders] =  useState([])
 
   useEffect(() => {
-    fetch("http://localhost:9000/api/orders/getAllOrders", {headers: {
+    fetch(`${baseURL}/api/orders/getAllOrders`, {headers: {
       'Content-Type': 'application/json',
       authorization: sessionStorage.getItem("token")
     }}).then((result) => result.json()).then((response) => {

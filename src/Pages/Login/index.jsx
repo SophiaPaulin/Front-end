@@ -1,9 +1,11 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../Context/AuthContext";
 import { showToast } from "../../Assets/toasts";
+import { mycontext } from "../../App";
 
 export default function Login() {
+  const {baseURL}=useContext(mycontext)
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const navigator = useNavigate();
@@ -19,7 +21,7 @@ export default function Login() {
     const password = passwordRef.current.value;
 
     if (email.length > 0 && password.length > 0) {
-      fetch("http://localhost:9000/api/auth/signin", {
+      fetch(`${baseURL}/api/auth/signin`, {
         method: "POST",
         body: JSON.stringify({
           email,
@@ -54,9 +56,12 @@ export default function Login() {
 
   return (
     <div
-      className="container"
+      className="container-fluid"
       style={{
         height: "100vh",
+        backgroundImage:'url("https://www.shutterstock.com/image-photo/hand-mechanic-holding-car-service-600nw-2340377479.jpg")',
+        backgroundSize:"cover",
+        width: "100vw"
       }}
     >
       <div
@@ -76,16 +81,15 @@ export default function Login() {
             style={{
               backgroundRepeat: "no-repeat",
               backgroundPosition:"center",
-              backgroundImage:
-                'url("https://png.pngtree.com/png-clipart/20210307/ourmid/pngtree-car-repair-service-vignette-png-image_3014260.jpg")',
             }}
           ></div>
           <div className="col-6 d-flex align-items-center justify-content-center">
             <div className="card" style={{ width: "400px" }}>
               <div className="card-body">
                 <div className="mb-3">
+                  <h3 className="text-center m-4">Sign In <i class="fa-solid fa-lock"></i></h3>
                   <label htmlFor="email" className="form-label">
-                    Email address
+                    Email address <i class="fa-solid fa-envelope"></i>
                   </label>
                   <input
                     ref={emailRef}
@@ -97,7 +101,7 @@ export default function Login() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label">
-                    Password
+                    Password <i class="fa-solid fa-key"></i>
                   </label>
                   <input
                     ref={passwordRef}

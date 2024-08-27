@@ -4,6 +4,8 @@ import Select from "../../Elements/Select";
 import TextInput from "../../Elements/TextInput";
 import useOffers from "../../Hooks/useOffersApi/useOffersApi";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { mycontext } from "../../App";
 
 
 const initialState = {
@@ -18,6 +20,7 @@ const initialState = {
 };
 
 export default function Products() {
+  const {baseURL}= useContext(mycontext)
   const [offers, error] = useOffers();
   const navigation = useNavigate();
   return (
@@ -39,7 +42,7 @@ export default function Products() {
           onSubmit={(values, { setSubmitting, resetForm }) => {
             console.log({ values })
             if (values) {
-              fetch("http://localhost:9000/api/products/create", {
+              fetch(`${baseURL}/api/products/create`, {
                 method: "POST",
                 body: JSON.stringify(values),
                 headers: {

@@ -2,6 +2,8 @@ import { Formik } from "formik";
 import TextInput from "../../Elements/TextInput";
 import { showToast } from "../../Assets/toasts";
 import { useAuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
+import { mycontext } from "../../App";
 
 const initialState = {
   brandName: "",
@@ -19,6 +21,7 @@ const initialState = {
 };
 
 export default function CreateBrand() {
+  const {baseURL}= useContext(mycontext)
   const { currentUser = {}  } = useAuthContext();
   return (
     <div className="container">
@@ -39,7 +42,7 @@ export default function CreateBrand() {
           onSubmit={(values, { setSubmitting, resetForm }) => {
             if (values) {
               // console.log({values})
-              fetch("http://localhost:9000/api/brands/create/", {
+              fetch(`${baseURL}/api/brands/create/`, {
                 method: "POST",
                 body: JSON.stringify({...values, brand: currentUser.brand}),
                 headers: {

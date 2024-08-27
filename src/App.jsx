@@ -17,11 +17,16 @@ import CreateBrand from "./Pages/Brands";
 import ManageBrands from "./Pages/Brands/ManageBrands";
 import ManageOrders from "./Pages/Orders/manageOrders";
 import OrdersCreate from "./Pages/Orders";
+import { createContext } from "react";
+
+export const mycontext= createContext(true)
 
 function App() {
     const {isLoggedIn} = useAuthContext();
+    const baseURL="https://backend-1-u5ce.onrender.com";
     return (
         <div>
+            <mycontext.Provider value={{baseURL}}>
             <ToastContainer/>
             <Routes>
                 {!isLoggedIn && <Route Component={Login} exact path="/"/>}
@@ -43,6 +48,7 @@ function App() {
                 )}
                 <Route Component={NotFound} path="*"/>
             </Routes>
+            </mycontext.Provider>
         </div>
     );
 }

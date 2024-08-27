@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { showToast } from "../../Assets/toasts";
 import { useAuthContext } from "../../Context/AuthContext";
+import { mycontext } from "../../App";
 
 export default function ManageBrands() {
+    const {baseURL}= useContext(mycontext)
     const [products, setProducts] = useState([])
     const { currentUser } = useAuthContext();
 
     useEffect(() => {
         if (currentUser) {
-            fetch(`http://localhost:9000/api/brands/getAllBrands`, {
+            fetch(`${baseURL}/api/brands/getAllBrands`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { mycontext } from "../../App";
 
 export default function ManageProducts() {
+  const {baseURL}= useContext(mycontext)
  const [products, setProducts] =  useState([])
 
   useEffect(() => {
-    fetch("http://localhost:9000/api/products/getAllProducts", {headers: {
+    fetch(`${baseURL}/api/products/getAllProducts`, {headers: {
       'Content-Type': 'application/json',
       authorization: sessionStorage.getItem("token")
     }}).then((result) => result.json()).then((response) => {
