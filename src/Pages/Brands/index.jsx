@@ -30,24 +30,21 @@ export default function CreateBrand() {
           initialValues={initialState}
           validate={(values) => {
             const errors = {};
-            if (!values.name) {
-              errors.name = "Required";
-            } else if (!values.description) {
-              errors.description = "Required";
-            } else if (!values.price) {
-              errors.price = "Required";
-            }
+            if (!values.brandName) {
+              errors.brandName = "Required";
+            } 
             return errors;
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
+            console.log({values})
             if (values) {
-              // console.log({values})
-              fetch(`${baseURL}/api/brands/create/`, {
+              console.log({values})
+              fetch(`${baseURL}/api/brands/create`, {
                 method: "POST",
-                body: JSON.stringify({...values, brand: currentUser.brand}),
+                body: JSON.stringify(values),
                 headers: {
                   "Content-Type": "application/json",
-                  token: sessionStorage.getItem("token"),
+                  authorization: sessionStorage.getItem("token"),
                 },
               })
                 .then((response) => {
@@ -79,7 +76,7 @@ export default function CreateBrand() {
                 <div className="col-6">
                   <TextInput
                     label="Brand Name"
-                    id="name"
+                    id="brandName"
                     name="brandName"
                     type="text"
                     value={values["brandName"]}
@@ -88,8 +85,8 @@ export default function CreateBrand() {
                     onChange={handleChange}
                   />
                   <TextInput
-                    label="Mail Id"
-                    id="mailId"
+                    label="Email Id"
+                    id="email"
                     name="email"
                     type="text"
                     value={values["email"]}

@@ -32,26 +32,26 @@ export default function SignUp() {
           
         },
       })
-        .then((response) => {
-          return response.json();
-        })
-        .then((result) => {
-          // if (result.success && result.token) {
-          //   sessionStorage.setItem("_tk", result.token);
-          //   setIsLoggedIn(true);
-            navigator("/dashboard");
-          // } else {
-          //   showToast(result.message, "error");
-          // }
-          console.log(result);
-        })
-        .catch((error) => {
-          showToast(error, "error");
-        });
-    } else {
-      showToast("Email or Password is required", "warning");
-    }
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        if (result.success) {
+          sessionStorage.setItem("userId", result.userId);
+          showToast("Register Success","Success")
+          navigator("/login");
+        } else {
+          showToast(result.message, "error");
+        }
+        console.log(result);
+      })
+      .catch((error) => {
+        showToast(error, "error");
+      });
+  } else {
+    showToast("Email or Password is required", "warning");
   }
+}
 
   return (
     <div

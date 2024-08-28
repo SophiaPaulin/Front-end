@@ -23,7 +23,8 @@ export const mycontext= createContext(true)
 
 function App() {
     const {isLoggedIn} = useAuthContext();
-    const baseURL="https://backend-1-u5ce.onrender.com";
+    // const baseURL= "http://localhost:9000"
+     const baseURL="https://backend-1-u5ce.onrender.com";
     return (
         <div>
             <mycontext.Provider value={{baseURL}}>

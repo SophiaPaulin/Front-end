@@ -5,11 +5,11 @@ import { mycontext } from "../../App";
 
 export default function ManageBrands() {
     const {baseURL}= useContext(mycontext)
-    const [products, setProducts] = useState([])
+    const [brands, setBrands] = useState([])
     const { currentUser } = useAuthContext();
 
     useEffect(() => {
-        if (currentUser) {
+        // if (currentUser) {
             fetch(`${baseURL}/api/brands/getAllBrands`, {
                 method: "GET",
                 headers: {
@@ -20,12 +20,12 @@ export default function ManageBrands() {
             .then((response) => response.json())
             .then((result) => {
                 showToast(result.message)
-                setProducts(result.response)
+                setBrands(result.result)
             })
             .catch((error) => {
                 showToast(error.message, "error")
             })
-        }
+       //
     }, [currentUser]);
 
   return (
