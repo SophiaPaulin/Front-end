@@ -5,80 +5,69 @@ import { showToast } from "../../Assets/toasts";
 import { mycontext } from "../../App";
 
 export default function SignUp() {
-  const {baseURL}=useContext(mycontext)
+  const { baseURL } = useContext(mycontext);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const navigator = useNavigate();
-  const { setIsLoggedIn = () => {} } = useAuthContext();
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useAuthContext();
 
-  const goToSigIn = ()=>{
-    navigator('/')
-  }
+  const goToSignIn = () => {
+    navigate('/');
+  };
 
   function handleSignup(e) {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    if (email.length > 0 && password.length > 0) {
-      fetch(`${baseURL}/api/auth/create`, {
-        method: "POST",
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          
-        },
-      })
-      .then((response) => {
-        return response.json();
-      })
+    // Basic validation
+    if (!email || !password) {
+      showToast("Email or Password is required", "warning");
+      return;
+    }
+    
+    // Basic email format validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      showToast("Invalid email format", "warning");
+      return;
+    }
+
+    fetch(`${baseURL}/api/auth/create`, {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
       .then((result) => {
         if (result.success) {
           sessionStorage.setItem("userId", result.userId);
-          showToast("Register Success","Success")
-          navigator("/login");
+          showToast("Register Success", "success");
+          navigate("/login");
         } else {
           showToast(result.message, "error");
         }
         console.log(result);
       })
       .catch((error) => {
-        showToast(error, "error");
+        console.error("Error during signup:", error);
+        showToast("An error occurred during signup", "error");
       });
-  } else {
-    showToast("Email or Password is required", "warning");
-  }
-}
+    
+    }
 
   return (
-    <div
-      className="container"
-      style={{
-        height: "100vh",
-      }}
-    >
-      <div
-        className="container-fluid"
-        style={{
-          height: "100%",
-        }}
-      >
-        <div
-          className="row"
-          style={{
-            height: "100%",
-          }}
-        >
+    <div className="container" style={{ height: "100vh" }}>
+      <div className="container-fluid" style={{ height: "100%" }}>
+        <div className="row" style={{ height: "100%" }}>
           <div
             className="col-6"
             style={{
               backgroundRepeat: "no-repeat",
-              backgroundPosition:"center",
-              backgroundImage:
-                'url("https://png.pngtree.com/png-clipart/20210307/ourmid/pngtree-car-repair-service-vignette-png-image_3014260.jpg")',
+              backgroundPosition: "center",
+              backgroundImage: 'url("https://png.pngtree.com/png-clipart/20210307/ourmid/pngtree-car-repair-service-vignette-png-image_3014260.jpg")',
             }}
           ></div>
           <div className="col-6 d-flex align-items-center justify-content-center">
@@ -105,7 +94,7 @@ export default function SignUp() {
                     type="password"
                     className="form-control"
                     id="password"
-                    placeholder="*********"
+                    placeholder="*"
                   />
                 </div>
                 
@@ -119,18 +108,18 @@ export default function SignUp() {
                 </button>
                 <br />
                 <br />
-                <a
+                <button
                   className="btn btn-default"
-                  // type="button"
                   style={{ width: "100%" }}
-                  onClick={goToSigIn}
+                  onClick={goToSignIn}
                 >
                   Sign In
-                </a>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )}
+  );
+}

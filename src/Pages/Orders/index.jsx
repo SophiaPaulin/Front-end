@@ -126,12 +126,12 @@ export default function OrdersCreate() {
                     onChange={handleChange}
                   />
                   <TextInput
-                    label="Product Description"
+                    label="Order Description"
                     id="description"
                     name="description"
                     type="text"
                     value={values["description"]}
-                    placeholder="Enter Product Description"
+                    placeholder="Enter Order Description"
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
@@ -168,7 +168,7 @@ export default function OrdersCreate() {
                       onChange={handleChange}
                     />
                     <label className="form-check-label" htmlFor="isPaid">
-                      Product Paid
+                      Order Paid
                     </label>
                   </div>
                   <button type="submit" className="btn btn-sm btn-primary mr-2">
