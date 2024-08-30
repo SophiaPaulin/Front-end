@@ -35,7 +35,7 @@ export default function SignUp() {
     //   return;
     // }
 
-    fetch(`http://localhost:9000/api/auth/register`, {
+    fetch(`${baseURL}/api/auth/register`, {
       method: "POST",
       body: JSON.stringify({ email, password, name }),
       headers: {
