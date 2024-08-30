@@ -6,6 +6,7 @@ import { mycontext } from "../../App";
 
 export default function SignUp() {
   const { baseURL } = useContext(mycontext);
+  const nameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function SignUp() {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    const name = nameRef.current.value;
 
     // Basic validation
     if (!email || !password) {
@@ -27,15 +29,15 @@ export default function SignUp() {
     }
     
     // Basic email format validation
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      showToast("Invalid email format", "warning");
-      return;
-    }
+    // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailPattern.test(email)) {
+    //   showToast("Invalid email format", "warning");
+    //   return;
+    // }
 
-    fetch(`${baseURL}/api/auth/create`, {
+    fetch(`http://localhost:9000/api/auth/register`, {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, name }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -73,6 +75,18 @@ export default function SignUp() {
           <div className="col-6 d-flex align-items-center justify-content-center">
             <div className="card" style={{ width: "400px" }}>
               <div className="card-body">
+              <div className="mb-3">
+                  <label htmlFor="name" className="form-label">
+                    Name
+                  </label>
+                  <input
+                    ref={nameRef}
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    placeholder="Enter Name"
+                  />
+                </div>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
                     Email address
